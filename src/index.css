@@ -5,3 +5,25 @@
 
 
 
+.list-personnel {
+
+    width: 90%;
+    background-color: #f3f8fc;
+    margin: 0 auto;
+    overflow: auto;
+    box-shadow: 10px;
+}
+
+
+.Latable {
+   
+    background-color: #ffffff;
+    /* Le composant occupe 90% de la largeur du corps */
+    border-radius: 10px;
+    width: 90%;
+
+    margin: 0 auto;
+    overflow: auto;
+
+    box-shadow: 10px 10px 10px rgb(0, 0, 0);
+}

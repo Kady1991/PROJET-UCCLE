@@ -1,45 +1,54 @@
 import React, { useState } from 'react';
 
-const ListPersonel = ({ personnel }) => {
-    const [csvFile, setCsvFile] = useState(null);
-    const [xlsFile, setXlsFile] = useState(null);
+const ListPersonnel = ({ personnel }) => {
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // Fonction pour gérer l'import CSV
-    const handleCSVChange = (event) => {
-        const file = event.target.files[0];
-        setCsvFile(file);
-
-        // Logique pour gérer l'import du fichier CSV
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const csvData = e.target.result;
-            // Traitement du fichier CSV
-            console.log(csvData);
-        };
-        reader.readAsText(file);
+    // Fonction pour gérer la saisie dans la barre de recherche
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
     };
 
-    // Fonction pour gérer l'import XLS
-    const handleXLSChange = (event) => {
-        const file = event.target.files[0];
-        setXlsFile(file);
+    // Filtrer le personnel en fonction du terme de recherche
+    const filteredPersonnel = personnel.filter((person) =>
+        person.nom.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-        // Logique pour gérer l'import du fichier XLS
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const xlsData = e.target.result;
-            // Traitement du fichier XLS
-            console.log(xlsData);
-        };
-        reader.readAsBinaryString(file);
-    };
+    // Ajout class supplementaires
+    document.body.classList.add('list-personnel');
+
+    // Ajout class supplementaires
 
     return (
-        <div className="overflow-x-auto">
-            <div className="flex justify-between mb-4">
-                
+
+        <div className="list-personnel">
+            
+            
+            <div className="flex justify-end mb-4">
+                <div className="relative w-64">
+                    <input
+                        type="text"
+                        className="border rounded px-3 py-1 w-full"
+                        placeholder="Rechercher..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                    <svg
+                        className="absolute right-0 top-0 mt-2 mr-2 h-4 w-4 text-Cyan-700 pointer-events-none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </div>
             </div>
-            <table className="table-auto w-full">
+            <table className='Latable'>
                 <thead>
                     <tr>
                         <th className="border px-4 py-2">NOM</th>
@@ -58,10 +67,11 @@ const ListPersonel = ({ personnel }) => {
                         <th className="border px-4 py-2">NOM CHEF DÉPARTEMENT</th>
                         <th className="border px-4 py-2">PRÉNOM CHEF DÉPARTEMENT</th>
                         <th className="border px-4 py-2">E-MAIL CHEF DÉPARTEMENT</th>
+                        {/* Ajoutez les autres en-têtes de colonne ici */}
                     </tr>
                 </thead>
                 <tbody>
-                    {personnel.map((person, index) => (
+                    {filteredPersonnel.map((person, index) => (
                         <tr key={index}>
                             <td className="border px-4 py-2">{person.nom}</td>
                             <td className="border px-4 py-2">{person.prenom}</td>
@@ -79,12 +89,14 @@ const ListPersonel = ({ personnel }) => {
                             <td className="border px-4 py-2">{person.nomChefDepartement}</td>
                             <td className="border px-4 py-2">{person.prenomChefDepartement}</td>
                             <td className="border px-4 py-2">{person.emailChefDepartement}</td>
+                            {/* Ajoutez les autres cellules de données ici */}
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
+
     );
 };
 
-export default ListPersonel;
+export default ListPersonnel;
